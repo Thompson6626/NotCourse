@@ -1,37 +1,83 @@
-import { useRef } from 'react';
-import gsap from 'gsap';
-import '../styles/Header.css';
-import { useGSAP } from '@gsap/react';
+"use client";
 
-gsap.registerPlugin(useGSAP);
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
+import { Sun, Moon } from "lucide-react";
+import "../styles/Header.css";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 function Header() {
-    const container = useRef<HTMLElement | null>(null);
+	const container = useRef<HTMLElement | null>(null);
 
-    useGSAP(() => {
-        gsap.from(container.current, {
-            y: -100,
-            opacity: 0,
-            duration: 1,
-            ease: 'power2.out',
-        });
-    });
+	const [isLight, setIsLight] = useState(() => {
+		// Prefer saved theme
+		const stored = localStorage.getItem("theme");
+		if (stored) return stored === "light";
 
-    return (
-        <header ref={container} className="header">
-            <div className="header-title">Master</div>
+		// Fallback to system preference
+		return window.matchMedia("(prefers-color-scheme: light)").matches;
+	});
 
-            <div className="header-features">
-                <div className="feature-item">Feature 1</div>
-                <div className="feature-item">Feature 2</div>
-                <div className="feature-item">Feature 3</div>
-                <div className="feature-item">Feature 4</div>
-                <div className="feature-item">Feature 5</div>
-            </div>
+	// Theme toggle effect
+	useEffect(() => {
+		const body = document.body;
+		if (isLight) {
+			body.classList.add("light");
+			localStorage.setItem("theme", "light");
+		} else {
+			body.classList.remove("light");
+			localStorage.setItem("theme", "dark");
+		}
+	}, [isLight]);
 
-            <div className="theme-toggle" id="toggle"></div>
-        </header>
-    );
+	// Entrance animation
+	useGSAP(() => {
+		const tl = gsap.timeline();
+
+		// Entrance
+		tl.from(container.current, {
+			y: -100,
+			opacity: 0,
+			duration: 1,
+			ease: "power2.out",
+		});
+
+		// Scroll-triggered fade
+		gsap.to(container.current, {
+			opacity: 0.8,
+			scrollTrigger: {
+				trigger: container.current,
+				start: "top top",
+				end: "+=100",
+				scrub: true,
+			},
+		});
+	}, { scope: container });
+
+	return (
+		<header ref={container} className="header">
+			<div className="header-title">Master</div>
+
+			<ul className="header-features">
+				<li className="feature-item">Feature 1</li>
+				<li className="feature-item">Feature 2</li>
+				<li className="feature-item">Feature 3</li>
+				<li className="feature-item">Feature 4</li>
+				<li className="feature-item">Feature 5</li>
+			</ul>
+
+			<div
+				className="theme-toggle"
+				onClick={() => setIsLight(prev => !prev)}
+				title="Toggle Theme"
+			>
+				{isLight ? <Moon className="icon" /> : <Sun className="icon" />}
+			</div>
+		</header>
+	);
 }
 
 export default Header;
