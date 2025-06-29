@@ -131,6 +131,24 @@ body {
 
 /* Light theme override (used as preferred) */
 body.light {
+  --primary: oklch(0.4 0.1 266);
+  --primary-100: oklch(0.38 0.06 266);
+  --primary-200: oklch(0.48 0.07 266);
+  --primary-300: oklch(0.58 0.08 266);
+  --primary-500: oklch(0.68 0.09 266);
+  --primary-600: oklch(0.82 0.09 266);
+  --primary-700: oklch(0.88 0.075 266);
+  --primary-800: oklch(0.95 0.05 266);
+
+  --secondary: oklch(0.4 0.1 86);
+  --secondary-100: oklch(0.38 0.06 86);
+  --secondary-200: oklch(0.48 0.07 86);
+  --secondary-300: oklch(0.58 0.08 86);
+  --secondary-400: oklch(0.68 0.09 86);
+  --secondary-500: oklch(0.82 0.09 86);
+  --secondary-600: oklch(0.88 0.075 86);
+  --secondary-700: oklch(0.95 0.05 86);
+
   --bg: oklch(0.96 0.01 266);
   --bg-dark: oklch(0.92 0.01 266);
   --bg-light: oklch(1 0.01 266);
@@ -143,8 +161,6 @@ body.light {
   --border: oklch(0.6 0.02 266);
   --border-muted: oklch(0.7 0.02 266);
 
-  --primary: oklch(0.4 0.1 266);
-  --secondary: oklch(0.4 0.1 86);
 
   --danger: oklch(0.5 0.05 30);
   --warning: oklch(0.5 0.05 100);
@@ -152,88 +168,8 @@ body.light {
   --info: oklch(0.5 0.05 260);
 }
 
-
 /* Custom Variant */
 @custom-variant dark (&:where(.dark, .dark *));
-
-.padding1{
-  padding: var(--spacing-1) 0;
-}
-.padding2{
-  padding: var(--spacing-2) 0
-;}
-.padding3{
-  padding: var(--spacing-3) 0;
-}
-.padding4{
-  padding: var(--spacing-4) 0;
-}
-.padding5{
-  padding: var(--spacing-5) 0;
-}
-.padding6{
-  padding: var(--spacing-6) 0;
-}
-.padding7{
-  padding: var(--spacing-7) 0;
-}
-.padding8{
-  padding: var(--spacing-8) 0;
-}
-
-.padding9{
-  padding: var(--spacing-9)  0;
-}
-.padding10{
-  padding: var(--spacing-10)  0;
-}
-
-/* Margin */
-.margin1{
-  margin: var(--spacing-1) auto;
-}
-
-
-
-.margin2{
-  margin: var(--spacing-2) auto;
-}
-
-
-
-.margin3{
-  margin: var(--spacing-3) auto;
-}
-
-
-.margin4{
-  margin: var(--spacing-4) auto;
-}
-
-.margin5{
-  margin: var(--spacing-5) auto;
-}
-
-.margin6{
-  margin: var(--spacing-6) auto;
-}
-.margin7{
-  margin: var(--spacing-7) auto;
-}
-
-.margin8{
-  margin: var(--spacing-8) auto;
-}
-
-.margin9{
-  margin: var(--spacing-9) auto;
-}
-
-.margin10{
-  margin: var(--spacing-10) auto;
-}
-
-
 
 
 

@@ -1,0 +1,70 @@
+.pricing {
+    width: 100%;
+    padding: var(--spacing-8) var(--spacing-4);
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.plans {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-6);
+}
+
+.plan {
+    background-color: var(--bg-light);
+    border: 1px solid var(--border);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-4);
+    max-width: 300px;
+    width: 100%;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.plan:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.plan-header {
+    text-align: center;
+}
+
+.plan-title {
+    font-size: var(--text-2xl);
+    font-family: var(--font-heading), sans-serif;
+    font-weight: bold;
+}
+
+.plan-price {
+    font-size: var(--text-xl);
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-2);
+    font-size: var(--text-base);
+}
+
+.feature-icon {
+    display: flex;
+    align-items: center;
+    color: var(--primary);
+}

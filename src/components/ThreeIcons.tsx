@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import gsap from "gsap";
@@ -6,18 +6,13 @@ import gsap from "gsap";
 function Icons3D() {
 	const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-	const [isTransforming, setIsTransforming] = useState(false);
-	const [touchHappened, setTouchHappened] = useState(false);
+	const isTransforming = useRef(false);
+	const touchHappened = useRef(false);
+	const rotationSpeed  = useRef(0.01);
 
-	function normalizeSize(object: THREE.Object3D, targetSize = 2) {
-		const box = new THREE.Box3().setFromObject(object);
-		const size = new THREE.Vector3();
-		box.getSize(size);
-		const maxDim = Math.max(size.x, size.y, size.z);
-		if (maxDim > 0) {
-			const scale = targetSize / maxDim;
-			object.scale.setScalar(scale);
-		}
+	// Modify to reescale based on the canvas dimensions
+	function normalizeSize(object: THREE.Object3D, targetSize = 9) {
+		object.scale.setScalar(targetSize);
 	}
 
 	function centerPivot(object: THREE.Object3D) {
@@ -84,26 +79,22 @@ function Icons3D() {
 			name: string;
 			instance: THREE.Object3D<THREE.Object3DEventMap> | null;
 		} = {
-			name: "Go",
+			name: "Spring",
 			instance: null,
 		};
 
-        let intersectObject: string | null = "";
-        const intersectObjects:  THREE.Object3D<THREE.Object3DEventMap>[] = [];
-
 		const intersectObjectsNames: string[] = [
-			"Python",
-			"Go",
-			"Rust",
-			"Java",
-			"Node",
+			"Spring",
+			"Laravel",
+			"Vue",
+			"Deno",
+			"Svelte",
 			"React",
-			"Angular",
-			"Astro",
+			"Node",
+			"Python",
+			"Java",
+			"Go",
 		];
-
-        const raycaster = new THREE.Raycaster();
-        const pointer = new THREE.Vector2();
 
 		// GLTF Loader
 		const loader = new GLTFLoader();
@@ -115,22 +106,21 @@ function Icons3D() {
 				glb.scene.traverse((child) => {
 					if (intersectObjectsNames.includes(child.name)) {
 						child.visible = false;
-                        intersectObjects.push(child);
 
 						if (child.name === currentlyShown.name) {
 							currentlyShown.instance = child;
 							child.visible = true;
 
-							normalizeSize(child, 6);
+							normalizeSize(child);
 							centerPivot(child);
 
-							child.traverse((mesh) => {
-								if ((mesh as THREE.Mesh).isMesh) {
-									mesh.castShadow = true;
-									mesh.receiveShadow = true;
-								}
-							});
 						}
+						child.traverse((mesh) => {
+							if ((mesh as THREE.Mesh).isMesh) {
+								mesh.castShadow = true;
+								mesh.receiveShadow = true;
+							}
+						});
 					}
 				});
 
@@ -143,57 +133,66 @@ function Icons3D() {
 		);
 
         function onClick() {
-            if (touchHappened) return;
-            handleInteraction();
+            if (touchHappened.current) return;
+			transformIcon();
         }
 
-        function handleInteraction(){
+		const transformIcon = () => {
+			if (isTransforming.current) return;
 
-            raycaster.setFromCamera(pointer, camera);
-            const intersects = raycaster.intersectObjects(intersectObjects);
-
-            if (intersects.length > 0) {
-                intersectObject = intersects[0]?.object?.name || null;
-            } else {
-                intersectObject = "";
-            }
+			isTransforming.current = true;
 
 
-            if (intersectObject && intersectObject !== "") {
-                if (intersectObjectsNames.includes(intersectObject)){
-                    if(!isTransforming){
-                        transformIcon(intersectObject);
-                    }
+			const ctx = gsap.context(() => {
+				const t1 = gsap.timeline({
+					onComplete: () => {
+						isTransforming.current = false; // Re-enable transform when done
+					},
+				});
 
-                }
-            }
+				t1.to(rotationSpeed, {
+					current: 0.3,
+					duration: 2.3,
+					ease: "sine.in", // very slow to very fast
+				})
+					.call(() => {
+
+						function getNextLogo(current: string): string {
+							const index = intersectObjectsNames.indexOf(current);
+							console.log("In here");
+							if (index === -1) return intersectObjectsNames[0];
+							const nextIndex = (index + 1) % intersectObjectsNames.length;
+							console.log(nextIndex);
+							console.log(intersectObjectsNames.length);
+							console.log(".....................................");
+							return intersectObjectsNames[nextIndex];
+						}
+
+						const chosen = getNextLogo(currentlyShown.name);
 
 
-        }
+						currentlyShown.instance.visible = false;
 
-        function transformIcon(meshID: string){
-			if(isTransforming) return;
+						const newMesh = scene.getObjectByName(chosen)!;
+						currentlyShown.instance = newMesh;
+						currentlyShown.name = chosen;
+						normalizeSize(newMesh);
+						centerPivot(newMesh);
 
-			const mesh = scene.getObjectByName(meshID);
+						newMesh.visible = true;
+					})
+					.to(rotationSpeed, {
+						current: 0.01,
+						duration: 2,
+						ease: "power2.out",
+					});
 
-			const t1 = gsap.timeline();
-			
-			
-			
+				// Animate mesh scale + rotation.y
 
+			}, canvasRef); // So GSAP doesn't leak out of your scene
 		}
 
-        canvas.addEventListener("click", onClick);
-
-
-        function onMouseMove(event: MouseEvent) {
-            pointer.x = (event.clientX / sizes.width) * 2 - 1;
-            pointer.y = -(event.clientY / sizes.height) * 2 + 1;
-            setTouchHappened(false);
-        }
-        canvas.addEventListener("mousemove", onMouseMove);
-
-        // Resize Handling
+		// Resize Handling
 		const onResize = () => {
 			const width = canvas.clientWidth;
 			const height = canvas.clientHeight;
@@ -201,12 +200,14 @@ function Icons3D() {
 			camera.updateProjectionMatrix();
 			renderer.setSize(width, height);
 		};
+
+		canvas.addEventListener("click", onClick);
 		window.addEventListener("resize", onResize);
 
 		// Animation Loop
 		const animate = () => {
 			if (currentlyShown.instance) {
-				currentlyShown.instance.rotation.z -= 0.01;
+				currentlyShown.instance.rotation.z -= rotationSpeed.current;
 			}
 			renderer.render(scene, camera);
 			requestAnimationFrame(animate);

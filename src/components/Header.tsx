@@ -45,16 +45,18 @@ function Header() {
 			ease: "power2.out",
 		});
 
-		// Scroll-triggered fade
-		gsap.to(container.current, {
-			opacity: 0.8,
+		const tl2 = gsap.timeline({
 			scrollTrigger: {
 				trigger: container.current,
-				start: "top top",
-				end: "+=100",
-				scrub: true,
-			},
+				start: "bottom top"
+			}
 		});
+
+		tl2.fromTo(container.current , { backgroundColor: "transparent" } , {
+			backdropFilter: "blur(10px)",
+			duration: 1,
+			ease: "power1.inOut",
+		}).call(() => console.log("Activating"))
 	}, { scope: container });
 
 	return (

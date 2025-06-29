@@ -4,7 +4,8 @@
 	align-items: center;
 	justify-content: space-between;
 	gap: 2rem;
-	padding: 4rem 2rem;
+	padding: var(--spacing-8) var(--spacing-6);
+	padding-top: 0;
 	min-height: 80vh;
 	color: var(--text);
 	font-family: var(--font-base), sans-serif;
@@ -41,12 +42,12 @@
 }
 
 .cta-button {
-	background-color: var(--bg-dark);
 	color: white;
 	padding: 0.75rem 1.5rem;
 	border: none;
-	border-radius: 0.5rem;
+	border-radius: var(--radius-full);
 	font-weight: bold;
+	margin: 0 var(--spacing-2);
 	cursor: pointer;
 }
 
@@ -59,13 +60,12 @@
 	transform: scale(0.98);
 }
 
-
-.cta button:first-child {
+.cta-buttons button:first-child {
 	background-color: var(--primary-500);
 	color: var(--text);
 }
 
-.cta button:last-child {
+.cta-buttons button:last-child {
 	background-color: transparent;
 	border: 2px solid var(--primary);
 	color: var(--text);

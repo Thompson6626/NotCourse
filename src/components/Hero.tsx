@@ -39,7 +39,7 @@ function Hero() {
 					const parent = target.parentNode;
 					return +parent.getAttribute("data-number");
 				},
-				duration: 2,
+				duration: 1.5,
 				snap: { textContent: 1 },
 				ease: "power1.out",
 				onUpdate: function () {
@@ -54,9 +54,12 @@ function Hero() {
 
 
 	return (
-		<section className="hero" ref={container}>
+		<section className="hero" ref={container} aria-label="Hero section">
 			<div className="hero-left">
-				<div className="hero-badge">🚀 Featured by top creators</div>
+				<div className="hero-badge" role="note">
+					<span aria-hidden="true">🚀</span> Featured by top creators
+				</div>
+
 				<Copy animateOnScroll={false} delay={0.2}>
 					<h1 className="hero-title">
 						Less stress. More success.
@@ -67,32 +70,31 @@ function Hero() {
 					</p>
 				</Copy>
 
-				<div className="cta">
+				<div className="cta-buttons" role="group" aria-label="Call to actions">
 					<button className="cta-button">Try for free</button>
 					<button className="cta-button">See Courses</button>
 				</div>
 
-					<div className="hero-stats">
-						{
-							projectStats.map((stat, index) => (
-								<div className="stat" key={index}>
-									<h3 className="stat-number" data-number={stat.number}>
-										<span className="stat-value">0</span> <span>{stat.postfix}</span>
-									</h3>
-									<Copy animateOnScroll={false} delay={0.2}>
-										<p>{stat.description}</p>
-									</Copy>
-								</div>
-
-							))
-						}
-					</div>
+				<div className="hero-stats" aria-label="Project statistics">
+					{projectStats.map((stat, index) => (
+						<div className="stat" key={index}>
+							<h3 className="stat-number" data-number={stat.number}>
+								<span className="stat-value">0</span>
+								<span className="stat-postfix"> {stat.postfix}</span>
+							</h3>
+							<Copy animateOnScroll={false} delay={0.2}>
+								<p>{stat.description}</p>
+							</Copy>
+						</div>
+					))}
+				</div>
 			</div>
 
-			<div className="hero-right">
+			<div className="hero-right" aria-hidden="true">
 				<Icons3D />
 			</div>
 		</section>
+
 	);
 }
 
