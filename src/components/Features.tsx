@@ -1,72 +1,52 @@
-import {
-    Code,
-    Layers,
-    Rocket,
-    GraduationCap,
-    Laptop2,
-    Users,
-} from "lucide-react";
 import "../styles/Features.css";
-import Copy from "./Copy.tsx";
+import UndergroundText from "./UndergroundText.tsx";
+import {useGSAP} from "@gsap/react";
+import gsap from "gsap";
+import {features} from "../constants";
 
-const features = [
-    {
-        summary: "Hands-on Coding",
-        description: "Learn by building real projects that mirror actual industry challenges.",
-        icon: <Code />,
-    },
-    {
-        summary: "Structured Learning Path",
-        description: "Progress through a well-defined curriculum that builds knowledge step-by-step.",
-        icon: <Layers />,
-    },
-    {
-        summary: "Launch-Ready Skills",
-        description: "Gain practical experience that prepares you for job interviews and freelancing.",
-        icon: <Rocket />,
-    },
-    {
-        summary: "Expert Instruction",
-        description: "Learn from experienced mentors who've worked in startups, agencies, and big tech.",
-        icon: <GraduationCap />,
-    },
-    {
-        summary: "Modern Tech Stack",
-        description: "Stay ahead of the curve with training in today's most in-demand tools and frameworks.",
-        icon: <Laptop2 />,
-    },
-    {
-        summary: "Supportive Community",
-        description: "Get help, feedback, and accountability from peers and mentors as you learn.",
-        icon: <Users />,
-    },
-];
 
 
 function Features(){
 
+    useGSAP(() => {
+
+        const tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".features",
+                start: "top 75%"
+            },
+        });
+
+        tl.from(".feature", {
+            y: 100,
+            opacity: 0,
+            duration: 1,
+            ease: "power2.out",
+            stagger: 0.1,
+        });
+
+    });
 
     return (
-        <section className="features-section">
-            <Copy delay={0.1}>
+        <section className="features-section" id="features">
+            <UndergroundText>
                 <h2 className="features-question">
-                    Why Choose Our Platform
+                    Why Pretend to Choose Us
                 </h2>
                 <h4 className="features-reason">
-                    No fluff. Just the tools, techniques, and support you need to thrive
+                    No fluff. Just chaos, coffee, and a vague sense of progress.
                 </h4>
-            </Copy>
+            </UndergroundText>
 
             <div className="features">
                 {
-                    features.map((feature, index) => {
+                    features.map(({ icon,summary,description }, index) => {
+                        const Icon = icon;
                         return (
                             <div className="feature" key={index}>
-                                <Copy>
-                                    <div className="feature-icon">{feature.icon}</div>
-                                    <h3>{feature.summary}</h3>
-                                    <p>{feature.description}</p>
-                                </Copy>
+                                <div className="feature-icon"><Icon /></div>
+                                <h3>{summary}</h3>
+                                <p>{description}</p>
                             </div>
                         )
                     })

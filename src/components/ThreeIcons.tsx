@@ -22,6 +22,68 @@ function Icons3D() {
 		object.position.sub(center);
 	}
 
+	function createParticleBurst(position: THREE.Vector3, scene: THREE.Scene) {
+		const particleCount = 500;
+		const radius = 1.3;
+
+		const geometry = new THREE.BufferGeometry();
+		const positions = new Float32Array(particleCount * 3);
+
+		for (let i = 0; i < particleCount; i++) {
+			const phi = Math.random() * 2 * Math.PI;
+			const costheta = Math.random() * 2 - 1;
+			const u = Math.random();
+
+			const theta = Math.acos(costheta);
+			const r = radius * Math.cbrt(u);
+
+			const x = r * Math.sin(theta) * Math.cos(phi);
+			const y = r * Math.sin(theta) * Math.sin(phi);
+			const z = r * Math.cos(theta);
+
+			positions.set([x, y, z], i * 3);
+		}
+
+		geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+
+
+		const isLightTheme = document.body.classList.contains("light");
+		const particleColor = isLightTheme ? 0x000000 : 0x00ffff;
+
+		const material = new THREE.PointsMaterial({
+			color: particleColor,
+			size: 0.08,
+			transparent: true,
+			opacity: 0.9,
+			depthWrite: false,
+		});
+
+		const points = new THREE.Points(geometry, material);
+		points.position.copy(position);
+		scene.add(points);
+
+		// Animate particle fade and scale outward
+		gsap.to(points.scale, {
+			x: 2,
+			y: 2,
+			z: 2,
+			duration: 0.6,
+			ease: "power2.out",
+		});
+
+		gsap.to(material, {
+			opacity: 0,
+			duration: 0.6,
+			ease: "power2.out",
+			onComplete: () => {
+				scene.remove(points);
+				geometry.dispose();
+				material.dispose();
+			},
+		});
+	}
+
+
 	useEffect(() => {
 		if (!canvasRef.current) return;
 
@@ -58,11 +120,7 @@ function Icons3D() {
 		renderer.toneMappingExposure = 1.7;
 
 
-        // ICON POSITIONS
-        // camera.position.set(0, 0, 6); // Z distance to give perspective
-        // camera.lookAt(0, 0, 0);
-
-		const light = new THREE.AmbientLight(0x404040, 14);
+		const light = new THREE.AmbientLight(0x404040, 4);
 		scene.add(light);
 
 		const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
@@ -85,6 +143,7 @@ function Icons3D() {
 
 		const intersectObjectsNames: string[] = [
 			"Spring",
+			"Poop",
 			"Laravel",
 			"Vue",
 			"Deno",
@@ -157,19 +216,20 @@ function Icons3D() {
 				})
 					.call(() => {
 
+						if (currentlyShown.instance) {
+							const worldPosition = new THREE.Vector3();
+							currentlyShown.instance.getWorldPosition(worldPosition);
+							createParticleBurst(worldPosition, scene);
+						}
+
 						function getNextLogo(current: string): string {
 							const index = intersectObjectsNames.indexOf(current);
-							console.log("In here");
 							if (index === -1) return intersectObjectsNames[0];
 							const nextIndex = (index + 1) % intersectObjectsNames.length;
-							console.log(nextIndex);
-							console.log(intersectObjectsNames.length);
-							console.log(".....................................");
 							return intersectObjectsNames[nextIndex];
 						}
 
 						const chosen = getNextLogo(currentlyShown.name);
-
 
 						currentlyShown.instance.visible = false;
 
@@ -187,9 +247,7 @@ function Icons3D() {
 						ease: "power2.out",
 					});
 
-				// Animate mesh scale + rotation.y
-
-			}, canvasRef); // So GSAP doesn't leak out of your scene
+			}, canvasRef);
 		}
 
 		// Resize Handling
@@ -204,6 +262,13 @@ function Icons3D() {
 		canvas.addEventListener("click", onClick);
 		window.addEventListener("resize", onResize);
 
+		// So the icons transfom on their own
+		const intervalId: ReturnType<typeof setInterval> | null = setInterval(() => {
+			if (!isTransforming.current) {
+				transformIcon();
+			}
+		}, 8000);
+
 		// Animation Loop
 		const animate = () => {
 			if (currentlyShown.instance) {
@@ -215,8 +280,10 @@ function Icons3D() {
 		animate();
 
 		return () => {
+			canvas.removeEventListener("click", onClick);
 			window.removeEventListener("resize", onResize);
 			renderer.dispose();
+			if (intervalId) clearInterval(intervalId);
 		};
 	}, []);
 

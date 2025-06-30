@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 @import "tailwindcss";
 
 @font-face {
@@ -49,7 +50,7 @@
 
     /* Typography & Spacing */
     --font-base: "Neue Grotesk", sans-serif;
-    --font-heading: "Sans Serif", sans-serif;
+    --font-heading: "Inter", sans-serif;
 
     --font-size-xs: 0.75rem;
     --font-size-sm: 0.875rem;
@@ -127,6 +128,7 @@ body {
   margin: 0;
   width: 100%;
   background-color: var(--bg-dark);
+  scroll-behavior: smooth;
 }
 
 /* Light theme override (used as preferred) */

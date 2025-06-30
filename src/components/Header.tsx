@@ -64,11 +64,10 @@ function Header() {
 			<div className="header-title">Master</div>
 
 			<ul className="header-features">
-				<li className="feature-item">Feature 1</li>
-				<li className="feature-item">Feature 2</li>
-				<li className="feature-item">Feature 3</li>
-				<li className="feature-item">Feature 4</li>
-				<li className="feature-item">Feature 5</li>
+				<a href="#home" className="feature-item">Home</a>
+				<a href="#features" className="feature-item">Features</a>
+				<a href="#testimonials" className="feature-item">Testimonials</a>
+				<a href="#pricing" className="feature-item">Pricing</a>
 			</ul>
 
 			<div

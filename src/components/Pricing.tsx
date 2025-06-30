@@ -1,91 +1,68 @@
-import { Banana, Ghost, Rocket, Wallet, XCircle, SmilePlus } from "lucide-react";
 import "../styles/Pricing.css";
+import {plans} from "../constants";
+import UndergroundText from "./UndergroundText.tsx";
+import gsap from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
+import {useGSAP} from "@gsap/react";
 
-export const plans = [
-    {
-        name: "Free™ (but you pay in dignity)",
-        price: 0,
-        features: [
-            {
-                feature: "Access to 3.5% of the content",
-                icon: <XCircle />,
-            },
-            {
-                feature: "Laggy UI for character building",
-                icon: <Ghost />,
-            },
-            {
-                feature: "Occasional motivational insults",
-                icon: <SmilePlus />,
-            },
-        ],
-    },
-    {
-        name: "Procrastinator Plus",
-        price: 4,
-        features: [
-            {
-                feature: "Full access, but you'll never open it",
-                icon: <Wallet />,
-            },
-            {
-                feature: "Weekly guilt-tripping emails",
-                icon: <Banana />,
-            },
-            {
-                feature: "Bonus: More things to avoid doing",
-                icon: <Ghost />,
-            },
-        ],
-    },
-    {
-        name: "Ultra Mega Overkill Premium Max+",
-        price: 99,
-        features: [
-            {
-                feature: "Everything from all past, present, and future plans",
-                icon: <Rocket />,
-            },
-            {
-                feature: "Gold-plated loading screen",
-                icon: <SmilePlus />,
-            },
-            {
-                feature: "Complimentary existential crisis",
-                icon: <XCircle />,
-            },
-        ],
-    },
-];
 
+gsap.registerPlugin(ScrollTrigger);
 
 function Pricing() {
 
+    useGSAP(() => {
+
+        gsap.from(
+            ".pricing-card",
+            {
+                opacity: 0,
+                y: 200,
+                duration: 0.8,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: ".pricing-card",
+                    start: "top 90%"
+                },
+            }
+        );
+
+    });
 
     return (
-        <div className="pricing">
-            <div>Best plan for you</div>
+        <section className="pricing-section" id="pricing">
+            <header className="pricing-context">
+                <UndergroundText>
+                    <h2 className="pricing-heading">
+                        Choose your plan
+                    </h2>
+                    <p className="pricing-subheading">
+                        From “I just peeked in” to “take my money,” we’ve got you covered.
+                    </p>
+                </UndergroundText>
+            </header>
             <div className="plans">
-                {plans.map((plan) => (
-                    <div className="plan" key={plan.name}>
-                        <div className="plan-header">
-                            <h2 className="plan-title">{plan.name}</h2>
-                            <p className="plan-price">${plan.price}</p>
-                        </div>
-                        <ul className="plan-features">
-                            {plan.features.map((feature, index) => (
-                                <li className="feature-item" key={index}>
-                                    <span className="feature-icon">{feature.icon}</span>
-                                    <span>{feature.feature}</span>
-                                </li>
-                            ))}
+                {plans.map(({ name, price, features, cta }, index) => (
+                    <article className={`pricing-card ${index === 1 ? "highlighted" : ""}`} key={index}>
+                        <h3 className="pricing-title">{name}</h3>
+                        <div className="pricing-price">${price}</div>
+                        <ul className="pricing-features">
+                            {features.map(({ icon, feature }, i) => {
+                                const Icon = icon;
+                                return (
+                                    <li className="pricing-feature" key={i}>
+                                        <span className="pricing-icon"><Icon /></span>
+                                        {feature}
+                                    </li>
+                                );
+                            })}
                         </ul>
-                    </div>
+                        <button className={`pricing-cta ${index === 1 ? "highlighted-button" : ""}`}>{cta}</button>
+                    </article>
                 ))}
             </div>
-        </div>
+        </section>
 
-    )
+    );
 }
 
 export default Pricing;

@@ -1,3 +1,18 @@
+import {
+    BadgeCheck,
+    Banana,
+    Code, Coffee, Crown,
+    Ghost,
+    GraduationCap,
+    Laptop2,
+    Layers,
+    PartyPopper,
+    Rocket,
+    SmilePlus,
+    Users, Wallet,
+    XCircle
+} from "lucide-react";
+
 export const projectStats = [
     {
         number: 10,
@@ -75,3 +90,72 @@ export const reviews = [
     }
 ];
 
+export const features = [
+    {
+        summary: "Keyboard-Fumbling Drills",
+        description: "Break things spectacularly while pretending you're building something revolutionary.",
+        icon: Code,
+    },
+    {
+        summary: "Confusing Learning Paths",
+        description: "Wander through an endless maze of tutorials until one sort of makes sense.",
+        icon: Layers,
+    },
+    {
+        summary: "Launch-Ready (ish) Skills",
+        description: "Gain experience that'll *almost* get you past the first interview round.",
+        icon: Rocket,
+    },
+    {
+        summary: "Experts™ at Your Service",
+        description: "Learn from folks who claim they were in startups. Probably. Once. Maybe.",
+        icon: GraduationCap,
+    },
+    {
+        summary: "Cutting-Edge-ish Stack",
+        description: "Work with tools that were hot last year, but hey—they still work... mostly.",
+        icon: Laptop2,
+    },
+    {
+        summary: "Emotionally Supportive Community",
+        description: "Cry together. Debug together. Pretend everything is going fine together.",
+        icon: Users,
+    },
+];
+
+export const plans = [
+    {
+        name: "Free™ (but you pay in dignity)",
+        price: 0,
+        features: [
+            { feature: "Access to 3.5% of the content", icon: XCircle },
+            { feature: "Laggy UI for character building", icon: Ghost },
+            { feature: "Occasional motivational insults", icon: SmilePlus },
+            { feature: "Unskippable welcome tour", icon: PartyPopper },
+        ],
+        cta: "I'm brave enough",
+    },
+    {
+        name: "Procrastinator Plus",
+        price: 4,
+        features: [
+            { feature: "Full access, but you'll never open it", icon: Wallet },
+            { feature: "Weekly guilt-tripping emails", icon: Banana  },
+            { feature: "Bonus: More things to avoid doing", icon: Ghost  },
+            { feature: "One complimentary digital coffee", icon: Coffee  },
+        ],
+        cta: "Might as well try it",
+    },
+    {
+        name: "Ultra Mega Overkill Premium Max+",
+        price: 99,
+        features: [
+            { feature: "Everything from all past, present, and future plans", icon: Rocket  },
+            { feature: "Gold-plated loading screen", icon: SmilePlus },
+            { feature: "Complimentary existential crisis", icon: XCircle  },
+            { feature: "Badge of questionable honor", icon: BadgeCheck  },
+            { feature: "A crown (imaginary)", icon: Crown },
+        ],
+        cta: "Ascend now",
+    },
+];

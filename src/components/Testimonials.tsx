@@ -1,90 +1,83 @@
-import { useRef, useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, A11y } from "swiper/modules";
 import { reviews } from "../constants";
 import { Star } from "lucide-react";
-import gsap from "gsap";
 import "../styles/Testimonials.css";
-import Copy from "./Copy.tsx";
+import UndergroundText from "./UndergroundText";
+import {useGSAP} from "@gsap/react";
+import gsap from "gsap";
 
 function Testimonials() {
-    const [index, setIndex] = useState(0);
-    const containerRef = useRef(null);
-    const visibleCount = 4;
 
-    const handlePrev = () => {
-        const newIndex = (index - visibleCount + reviews.length) % reviews.length;
-        animateSlide(newIndex);
-    };
-
-    const handleNext = () => {
-        const newIndex = (index + visibleCount) % reviews.length;
-        animateSlide(newIndex);
-    };
-
-    const animateSlide = (newIndex) => {
-        const container = containerRef.current;
-        const reviewWidth = container.children[0].offsetWidth;
-        const gap = parseFloat(getComputedStyle(container).gap) || 24;
-        const offset = (reviewWidth + gap) * newIndex;
-
-        gsap.to(container, {
-            x: -offset,
-            duration: 0.010,
-            ease: "power3.out",
+    useGSAP(() => {
+        gsap.from(".review", {
+            opacity: 0,
+            y: 200,
+            duration: 0.8,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".testimonials-swiper",
+                start: "top 90%"
+            },
+            stagger: 0.1
         });
-
-        setIndex(newIndex);
-    };
-
-    // Reset animation on resize (optional)
-    useEffect(() => {
-        const onResize = () => {
-            animateSlide(index);
-        };
-        window.addEventListener("resize", onResize);
-        return () => window.removeEventListener("resize", onResize);
-    }, [index]);
+    });
 
     return (
-        <section className="testimonials-section" aria-labelledby="testimonials-title">
+        <section className="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
             <header className="testimonial-header">
-                <Copy delay={0.1}>
+                <UndergroundText delay={0.1}>
                     <h2 id="testimonials-title" className="testimonial-reason">
                         Praise from People We Definitely Didn’t Pay
                     </h2>
-                    <p className="testimonial-text">Because nothing says trustworthy like anonymous internet quotes</p>
-                </Copy>
+                    <p className="testimonial-text">
+                        Because nothing says trustworthy like anonymous internet quotes
+                    </p>
+                </UndergroundText>
             </header>
 
-            <div className="carousel-controls">
-                <button onClick={handlePrev} aria-label="Previous reviews">‹</button>
-                <button onClick={handleNext} aria-label="Next reviews">›</button>
-            </div>
-
-            <div className="carousel-viewport">
-                <div className="cherrypicked-reviews" ref={containerRef}>
-                    {reviews.map((review, i) => (
-                        <article key={i} className="review">
-                            <div className="rating" aria-label={`Rating: ${review.rating} out of 5 stars`}>
-                                {Array.from({ length: 5 }, (_, i) => {
-                                    const isFilled = i < review.rating;
+            <Swiper
+                modules={[Navigation, Pagination, A11y]}
+                pagination={{ clickable: true }}
+                spaceBetween={24}
+                slidesPerView={3}
+                breakpoints={{
+                    320: { slidesPerView: 1 },
+                    640: { slidesPerView: 1.25 },
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                    1280: { slidesPerView: 4 },
+                }}
+                className="testimonials-swiper"
+                aria-roledescription="carousel"
+            >
+                {reviews.map((review, i) => (
+                    <SwiperSlide  key={i}>
+                        <article className="review" role="group" aria-label={`Testimonial by ${review.name}`}>
+                            <div className="rating" aria-hidden="true">
+                                {Array.from({ length: 5 }, (_, j) => {
+                                    const filled = j < review.rating;
                                     return (
                                         <Star
-                                            key={i}
-                                            fill={isFilled ? "currentColor" : "none"}
+                                            key={j}
+                                            fill={filled ? "currentColor" : "none"}
                                             stroke="currentColor"
-                                            strokeWidth={isFilled ? 0 : 1.5}
+                                            strokeWidth={filled ? 0 : 1.5}
                                         />
                                     );
                                 })}
                             </div>
 
-                            <blockquote className="review-text">{review.testimonial}</blockquote>
+                            <blockquote className="review-text">
+                                “{review.testimonial}”
+                            </blockquote>
 
                             <footer className="review-author">
                                 <img
                                     src={review.profileImageUrl}
-                                    alt={`Profile of ${review.name}`}
+                                    alt={`Photo of ${review.name}`}
                                     className="author-image"
+                                    loading="lazy"
                                 />
                                 <div>
                                     <div className="author-name">{review.name}</div>
@@ -92,11 +85,10 @@ function Testimonials() {
                                 </div>
                             </footer>
                         </article>
-                    ))}
-                </div>
-            </div>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
         </section>
-
     );
 }
 

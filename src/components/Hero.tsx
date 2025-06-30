@@ -1,6 +1,6 @@
 "use client";
 
-import Copy from "./Copy.tsx";
+import UndergroundText from "./UndergroundText.tsx";
 import "../styles/Hero.css";
 import Icons3D from "./ThreeIcons.tsx";
 import {useGSAP} from "@gsap/react";
@@ -23,12 +23,6 @@ function Hero() {
 			duration: 1,
 			ease: "power2.out",
 		}, "<")
-			.from(".cta-button", {
-				y: 100,
-				opacity: 0,
-				duration: 0.6,
-				ease: "power2.out",
-			}, "<")
 			.from(".stat-number",{
 				opacity: 0,
 				duration: 0.2,
@@ -54,25 +48,25 @@ function Hero() {
 
 
 	return (
-		<section className="hero" ref={container} aria-label="Hero section">
+		<section className="hero" ref={container} aria-label="Hero section" id="home">
 			<div className="hero-left">
 				<div className="hero-badge" role="note">
 					<span aria-hidden="true">🚀</span> Featured by top creators
 				</div>
 
-				<Copy animateOnScroll={false} delay={0.2}>
+				<UndergroundText animateOnScroll={false} delay={0.2}>
 					<h1 className="hero-title">
-						Less stress. More success.
+						Fewer bugs. More brags.
 					</h1>
 
 					<p className="hero-subtext">
-						Whether you're building a brand, a project, or a dream — we've got the tools to help you stay focused, move fast, and get results.
+						Whether you're launching a side project, battling semicolons, or chasing that sweet, sweet Stack Overflow upvote — we’ve got the tools, tutorials, and tech therapy you need to survive and thrive.
 					</p>
-				</Copy>
+				</UndergroundText>
 
 				<div className="cta-buttons" role="group" aria-label="Call to actions">
-					<button className="cta-button">Try for free</button>
-					<button className="cta-button">See Courses</button>
+					<button className="cta-button btn-fade-up">Try for free</button>
+					<button className="cta-button btn-fade-up">See Courses</button>
 				</div>
 
 				<div className="hero-stats" aria-label="Project statistics">
@@ -82,9 +76,9 @@ function Hero() {
 								<span className="stat-value">0</span>
 								<span className="stat-postfix"> {stat.postfix}</span>
 							</h3>
-							<Copy animateOnScroll={false} delay={0.2}>
-								<p>{stat.description}</p>
-							</Copy>
+							<UndergroundText animateOnScroll={false} delay={0.2}>
+								<p className="stat-summary">{stat.description}</p>
+							</UndergroundText>
 						</div>
 					))}
 				</div>
