@@ -8,6 +8,7 @@
     padding: var(--spacing-10) var(--spacing-4);
     color: var(--text);
     overflow: hidden;
+    transition: background-color var(--transition-slight-faster);
 }
 
 .testimonial-header {

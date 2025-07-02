@@ -1,54 +1,63 @@
-"use client";
-
 import UndergroundText from "./UndergroundText.tsx";
 import "../styles/Hero.css";
 import Icons3D from "./ThreeIcons.tsx";
 import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
-import {useRef} from "react";
 import { projectStats } from "../constants";
 
 gsap.registerPlugin(useGSAP);
 
 
 function Hero() {
-	const container = useRef(null);
 
 	useGSAP(() => {
 		const tl = gsap.timeline();
+		const statEls = gsap.utils.toArray<HTMLElement>('.stat-value');
 
 		tl.from(".hero-badge", {
 			y: 50,
 			opacity: 0,
 			duration: 1,
 			ease: "power2.out",
-		}, "<")
-			.from(".stat-number",{
-				opacity: 0,
-				duration: 0.2,
-				ease: "power2.out",
-			})
-			.to(".stat-value", {
-				textContent: (_: never, target) => {
-					const parent = target.parentNode;
-					return +parent.getAttribute("data-number");
-				},
-				duration: 1.5,
-				snap: { textContent: 1 },
+		});
+
+		const fadeTargets: HTMLElement[] = [];
+		statEls.forEach(el => {
+			const postfix = el.nextElementSibling as HTMLElement;
+			fadeTargets.push(el, postfix);
+		});
+
+		tl.from(fadeTargets, {
+			opacity: 0,
+			duration: 0.3,
+			ease: "power2.out"
+		});
+
+		// Step 2: Animate all number counts in parallel
+		statEls.forEach((el) => {
+			const parent = el.closest(".stat-number");
+			const finalVal = parseInt(parent?.getAttribute("data-number") ?? "0");
+			const obj = { val: 0 };
+
+			tl.to(obj, {
+				val: finalVal,
+				duration: 1.3,
 				ease: "power1.out",
-				onUpdate: function () {
-					// Optional: Add thousands separators or custom formatting
-					document.querySelectorAll('.stat-value').forEach(el => {
-						const val = parseInt(el.textContent || '0');
-						el.textContent = val.toLocaleString();
-					});
+				snap: { val: 1 },
+				onUpdate: () => {
+					el.textContent = obj.val.toLocaleString();
 				}
-			}, "<0.5");
-	}, { scope: container });
+			}, "<");
+		});
+	});
+
+
+
+
 
 
 	return (
-		<section className="hero" ref={container} aria-label="Hero section" id="home">
+		<section className="hero fast-background-transition" aria-label="Hero section" id="home">
 			<div className="hero-left">
 				<div className="hero-badge" role="note">
 					<span aria-hidden="true">🚀</span> Featured by top creators
@@ -65,8 +74,8 @@ function Hero() {
 				</UndergroundText>
 
 				<div className="cta-buttons" role="group" aria-label="Call to actions">
-					<button className="cta-button btn-fade-up">Try for free</button>
-					<button className="cta-button btn-fade-up">See Courses</button>
+					<button className="cta-button btn-fade-up fast-background-transition">Try for free</button>
+					<button className="cta-button btn-fade-up fast-background-transition">See Courses</button>
 				</div>
 
 				<div className="hero-stats" aria-label="Project statistics">

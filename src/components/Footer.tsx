@@ -4,7 +4,7 @@ import { SiX, SiFacebook, SiInstagram} from "react-icons/si";
 function Footer() {
 
     return (
-        <footer className="footer-section">
+        <footer className="footer-section fast-background-transition">
             <div className="company-name">
                 Master
             </div>

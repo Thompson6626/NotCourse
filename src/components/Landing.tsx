@@ -1,11 +1,10 @@
-"use client";
-
 import Header from "./Header.tsx";
 import Hero from "./Hero.tsx";
 import Features from "./Features.tsx";
 import Testimonials from "./Testimonials.tsx";
 import Pricing from "./Pricing.tsx";
 import Footer from "./Footer.tsx";
+import FAQ from "./FAQ.tsx";
 
 function Landing() {
 	return (
@@ -15,6 +14,7 @@ function Landing() {
 			<Features />
 			<Testimonials />
 			<Pricing />
+			<FAQ />
 			<Footer />
 		</div>
 	);

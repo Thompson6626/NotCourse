@@ -155,7 +155,6 @@ function Icons3D() {
 			"Go",
 		];
 
-		// GLTF Loader
 		const loader = new GLTFLoader();
 
 

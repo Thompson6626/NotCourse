@@ -9,17 +9,16 @@
   font-display: swap;
 }
 
-/* Tailwind Base Layer for Theming */
 @layer base {
   :root {
-    --primary: oklch(0.76 0.1 266);   /* Base */
-    --primary-100: oklch(0.95 0.05 266);  /* Lightest */
-    --primary-200: oklch(0.88 0.075 266);
-    --primary-300: oklch(0.82 0.09 266);
-    --primary-500: oklch(0.68 0.09 266);
-    --primary-600: oklch(0.58 0.08 266);
-    --primary-700: oklch(0.48 0.07 266);
-    --primary-800: oklch(0.38 0.06 266);  /* Darkest Usable */
+    --primary: oklch(0.7 0.08 270);
+    --primary-100: oklch(0.95 0.03 270);
+    --primary-200: oklch(0.88 0.05 270);
+    --primary-300: oklch(0.8 0.06 270);
+    --primary-500: oklch(0.65 0.08 270);
+    --primary-600: oklch(0.55 0.08 270);
+    --primary-700: oklch(0.45 0.07 270);
+    --primary-800: oklch(0.35 0.06 270);
 
     --secondary: oklch(0.76 0.1 86);  /* Base */
     --secondary-100: oklch(0.95 0.05 86);
@@ -30,12 +29,15 @@
     --secondary-700: oklch(0.48 0.07 86);
     --secondary-800: oklch(0.38 0.06 86);
 
-    --bg-dark: oklch(0.1 0.01 266);
-    --bg: oklch(0.15 0.01 266);
-    --bg-light: oklch(0.2 0.01 266);
-	
-    --text: oklch(0.96 0.02 266);
-    --text-muted: oklch(0.76 0.02 266);
+    /* Backgrounds */
+    --bg-dark: oklch(0.13 0.01 270); /* deep muted dark */
+    --bg: oklch(0.17 0.01 270);
+    --bg-light: oklch(0.22 0.01 270);
+
+    /* Text */
+    --text: oklch(0.96 0.01 270);
+    --text-muted: oklch(0.7 0.01 270);
+    --text-dark: oklch(0.15 0.01 270);
 
     --highlight: oklch(0.5 0.02 266);
 
@@ -93,12 +95,12 @@
     --radius-md: 0.375rem;
     --radius-full: 9999px;
 
-    --box-shadow-sm: 0 1px 2px rgba(0 0 0 / 0.05);
-    --box-shadow: 0 2px 6px rgba(0 0 0 / 0.3);
-    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+    --box-shadow-sm: 0 1px 2px oklch(0 0 0 / 0.05);
+    --box-shadow: 0 2px 6px oklch(0 0 0 / 0.3);
+    --shadow-sm: 0 1px 2px 0 oklch(0 0 0 / 0.05);
+    --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px oklch(0 0 0 / 0.1);
 
     --z-base: 0;
     --z-dropdown: 10;
@@ -121,7 +123,6 @@
   }
 }
 
-/* Base Element Styles */
 html,
 body {
   overscroll-behavior: none;
@@ -129,18 +130,19 @@ body {
   width: 100%;
   background-color: var(--bg-dark);
   scroll-behavior: smooth;
+  transition: background-color 0.25s ease-in-out;
 }
 
-/* Light theme override (used as preferred) */
 body.light {
-  --primary: oklch(0.4 0.1 266);
-  --primary-100: oklch(0.38 0.06 266);
-  --primary-200: oklch(0.48 0.07 266);
-  --primary-300: oklch(0.58 0.08 266);
-  --primary-500: oklch(0.68 0.09 266);
-  --primary-600: oklch(0.82 0.09 266);
-  --primary-700: oklch(0.88 0.075 266);
-  --primary-800: oklch(0.95 0.05 266);
+  --primary: oklch(0.55 0.08 270);
+  --primary-100: oklch(0.96 0.03 270);
+  --primary-200: oklch(0.88 0.04 270);
+  --primary-300: oklch(0.78 0.06 270);
+  --primary-500: oklch(0.65 0.08 270);
+  --primary-600: oklch(0.72 0.09 270);
+  --primary-700: oklch(0.84 0.07 270);
+  --primary-800: oklch(0.92 0.05 270);
+
 
   --secondary: oklch(0.4 0.1 86);
   --secondary-100: oklch(0.38 0.06 86);
@@ -151,12 +153,13 @@ body.light {
   --secondary-600: oklch(0.88 0.075 86);
   --secondary-700: oklch(0.95 0.05 86);
 
-  --bg: oklch(0.96 0.01 266);
-  --bg-dark: oklch(0.92 0.01 266);
-  --bg-light: oklch(1 0.01 266);
+  --bg: oklch(0.97 0.005 270);
+  --bg-dark: oklch(0.92 0.01 270);
+  --bg-light: oklch(1 0.005 270);
 
-  --text: oklch(0.15 0.02 266);
-  --text-muted: oklch(0.4 0.02 266);
+  --text: oklch(0.18 0.01 270);
+  --text-muted: oklch(0.4 0.01 270);
+  --text-dark: oklch(0.96 0.01 270);
 
   --highlight: oklch(1 0.02 266);
 
@@ -170,11 +173,12 @@ body.light {
   --info: oklch(0.5 0.05 260);
 }
 
-/* Custom Variant */
 @custom-variant dark (&:where(.dark, .dark *));
 
 
-
+.fast-background-transition {
+  transition: background-color var(--transition-slight-faster) ease-in-out;
+}
 
 
 

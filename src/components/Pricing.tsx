@@ -29,7 +29,7 @@ function Pricing() {
     });
 
     return (
-        <section className="pricing-section" id="pricing">
+        <section className="pricing-section fast-background-transition" id="pricing">
             <header className="pricing-context">
                 <UndergroundText>
                     <h2 className="pricing-heading">
@@ -42,7 +42,7 @@ function Pricing() {
             </header>
             <div className="plans">
                 {plans.map(({ name, price, features, cta }, index) => (
-                    <article className={`pricing-card ${index === 1 ? "highlighted" : ""}`} key={index}>
+                    <article className={`fast-background-transition pricing-card ${index === 1 ? "highlighted" : ""}`} key={index}>
                         <h3 className="pricing-title">{name}</h3>
                         <div className="pricing-price">${price}</div>
                         <ul className="pricing-features">

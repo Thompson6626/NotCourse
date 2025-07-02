@@ -53,7 +53,7 @@ function Testimonials() {
             >
                 {reviews.map((review, i) => (
                     <SwiperSlide  key={i}>
-                        <article className="review" role="group" aria-label={`Testimonial by ${review.name}`}>
+                        <article className="review fast-background-transition" role="group" aria-label={`Testimonial by ${review.name}`}>
                             <div className="rating" aria-hidden="true">
                                 {Array.from({ length: 5 }, (_, j) => {
                                     const filled = j < review.rating;

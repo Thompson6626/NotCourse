@@ -1,5 +1,5 @@
 import "./styles/global.css";
-//import { StrictMode } from "react";
+//import { StrictMode } from "react"; // Messes up Threejs
 import { createRoot } from "react-dom/client";
 import Landing from "./components/Landing.tsx";
 
