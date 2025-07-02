@@ -24,13 +24,6 @@ function Header() {
 	}, [isLight]);
 
 	useGSAP(() => {
-		const tl = gsap.timeline();
-		tl.from(container.current, {
-			y: -100,
-			opacity: 0,
-			duration: 1,
-			ease: "power2.out",
-		});
 
 		const tl2 = gsap.timeline({
 			scrollTrigger: {
@@ -55,7 +48,7 @@ function Header() {
 	};
 
 	return (
-		<header ref={container} className="header fast-background-transition">
+		<header ref={container} className="header slide-top fast-background-transition">
 			<div className="header-title">Master</div>
 
 			<ul className="header-features">

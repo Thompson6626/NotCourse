@@ -1,9 +1,8 @@
 import "../styles/Features.css";
 import UndergroundText from "./UndergroundText.tsx";
-import {useGSAP} from "@gsap/react";
-import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import {features} from "../constants";
-
+import gsap from "gsap";
 
 
 function Features(){

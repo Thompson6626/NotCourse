@@ -15,7 +15,7 @@ function Hero() {
 		const statEls = gsap.utils.toArray<HTMLElement>('.stat-value');
 
 		tl.from(".hero-badge", {
-			y: 50,
+			y: 100,
 			opacity: 0,
 			duration: 1,
 			ease: "power2.out",
@@ -53,9 +53,6 @@ function Hero() {
 
 
 
-
-
-
 	return (
 		<section className="hero fast-background-transition" aria-label="Hero section" id="home">
 			<div className="hero-left">
@@ -65,11 +62,11 @@ function Hero() {
 
 				<UndergroundText animateOnScroll={false} delay={0.2}>
 					<h1 className="hero-title">
-						Fewer bugs. More brags.
+						Learn faster. Fail better.
 					</h1>
 
 					<p className="hero-subtext">
-						Whether you're launching a side project, battling semicolons, or chasing that sweet, sweet Stack Overflow upvote — we’ve got the tools, tutorials, and tech therapy you need to survive and thrive.
+						Our resources won’t stop you from breaking things, but they will help you understand why it broke.
 					</p>
 				</UndergroundText>
 
@@ -97,7 +94,6 @@ function Hero() {
 				<Icons3D />
 			</div>
 		</section>
-
 	);
 }
 

@@ -125,7 +125,7 @@ export const features = [
 
 export const plans = [
     {
-        name: "Free™ (but you pay in dignity)",
+        name: "Free™",
         price: 0,
         features: [
             { feature: "Access to 3.5% of the content", icon: XCircle },
@@ -133,7 +133,7 @@ export const plans = [
             { feature: "Occasional motivational insults", icon: SmilePlus },
             { feature: "Unskippable welcome tour", icon: PartyPopper },
         ],
-        cta: "I'm brave enough",
+        cta: "Might as well try it",
     },
     {
         name: "Procrastinator Plus",
@@ -144,7 +144,7 @@ export const plans = [
             { feature: "Bonus: More things to avoid doing", icon: Ghost  },
             { feature: "One complimentary digital coffee", icon: Coffee  },
         ],
-        cta: "Might as well try it",
+        cta: "I never lack",
     },
     {
         name: "Ultra Mega Overkill Premium Max+",
@@ -158,4 +158,31 @@ export const plans = [
         ],
         cta: "Ascend now",
     },
+];
+
+export const questions = [
+    {
+        question: "Is this just another tutorial site?",
+        answer: "Nope. Think of us as your personal tech therapist — minus the couch, plus the code. We help you ship faster, debug smarter, and maybe even brag a little."
+    },
+    {
+        question: "Do I need to be a senior dev to use this?",
+        answer: "Absolutely not. Whether you're debugging your first `undefined`, or deploying for your startup, we’ve got you covered."
+    },
+    {
+        question: "What’s included in the 'Free' plan?",
+        answer: "Enough to get you dangerously productive — sample projects, exclusive guides, and a sneak peek at the magic behind the paywall. No credit card. No BS."
+    },
+    {
+        question: "Why 'Fewer bugs. More brags'?",
+        answer: "Because showing off clean code is more fun than rage-posting on Stack Overflow. And let's face it — who doesn't love a humble brag?"
+    },
+    {
+        question: "Will this help me get a dev job?",
+        answer: "If you put in the work — absolutely. We’ll help you learn real-world tools, build a portfolio that slaps, and prep for interviews without the cringe."
+    },
+    {
+        question: "What if I get stuck?",
+        answer: "We’ve got docs, guides, Discord support, and a thriving community that remembers what it was like to cry over their first `useEffect`."
+    }
 ];

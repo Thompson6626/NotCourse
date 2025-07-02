@@ -7,9 +7,9 @@ import { useGSAP } from "@gsap/react";
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
 export default function UndergroundText({ children, animateOnScroll = true, delay = 0 }) {
-	const containerRef = useRef(null);
-	const splitInstances = useRef([]); // actual SplitText instances
-	const lines = useRef([]); // collected lines from all splits
+	const containerRef = useRef<HTMLDivElement  | null>(null);
+	const splitInstances = useRef<SplitText[]>([]); // actual SplitText instances
+	const lines = useRef<Element[]>([]); // collected lines from all splits
 
 	useGSAP(
 		() => {
@@ -20,6 +20,7 @@ export default function UndergroundText({ children, animateOnScroll = true, dela
 			lines.current = [];
 
 			const isWrapper = containerRef.current.hasAttribute("data-copy-wrapper");
+
 			const elements = isWrapper
 				? Array.from(containerRef.current.children)
 				: [containerRef.current];
