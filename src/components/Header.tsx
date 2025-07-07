@@ -49,7 +49,11 @@ function Header() {
 
 	return (
 		<header ref={container} className="header slide-top fast-background-transition">
-			<div className="header-title">Master</div>
+			<div className="header-title flex items-center gap-2">
+				<img src="./logo.svg" alt="Logo" className="w-10 h-10" />
+				Master
+			</div>
+
 
 			<ul className="header-features">
 				<a href="#home" className="feature-item">Home</a>

@@ -1,6 +1,6 @@
 import UndergroundText from "./UndergroundText.tsx";
 import "../styles/Hero.css";
-import Icons3D from "./ThreeIcons.tsx";
+import Icons3D from "./Icons3D.tsx";
 import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
 import { projectStats } from "../constants";
