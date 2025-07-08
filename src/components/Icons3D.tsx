@@ -201,7 +201,7 @@ function Icons3D() {
 			isTransforming.current = true;
 
 
-			const ctx = gsap.context(() => {
+			gsap.context(() => {
 				const t1 = gsap.timeline({
 					onComplete: () => {
 						isTransforming.current = false; // Re-enable transform when done
@@ -230,7 +230,7 @@ function Icons3D() {
 
 						const chosen = getNextLogo(currentlyShown.name);
 
-						currentlyShown.instance.visible = false;
+						currentlyShown.instance!.visible = false;
 
 						const newMesh = scene.getObjectByName(chosen)!;
 						currentlyShown.instance = newMesh;
