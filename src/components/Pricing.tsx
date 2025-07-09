@@ -1,6 +1,6 @@
 import "../styles/Pricing.css";
 import {plans} from "../constants";
-import UndergroundText from "./UndergroundText.tsx";
+import UndergroundText from "./UndergroundText.js";
 import gsap from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {useGSAP} from "@gsap/react";

@@ -4,7 +4,7 @@ import { useState } from "react"
 import { ChevronDown } from "lucide-react"
 import { questions } from "../constants"
 import "../styles/FAQ.css"
-import UndergroundText from "./UndergroundText.tsx";
+import UndergroundText from "./UndergroundText.js";
 import {useGSAP} from "@gsap/react";
 import gsap from "gsap";
 

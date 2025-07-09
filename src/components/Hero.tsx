@@ -1,4 +1,4 @@
-import UndergroundText from "./UndergroundText.tsx";
+import UndergroundText from "./UndergroundText.js";
 import "../styles/Hero.css";
 import Icons3D from "./Icons3D.tsx";
 import {useGSAP} from "@gsap/react";
