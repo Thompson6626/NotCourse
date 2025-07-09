@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, type ReactNode } from "react";
 import gsap from "gsap";
 	import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -6,11 +6,17 @@ import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(SplitText, ScrollTrigger);
 
+type UndergroundTextProps = {
+  children: ReactNode;
+  animateOnScroll?: boolean;
+  delay?: number;
+};
 
-export default function UndergroundText({ children, animateOnScroll = true, delay = 0 }) {
-	const containerRef = useRef(null);
-	const splitInstances = useRef([]); // actual SplitText instances
-	const lines = useRef([]); // collected lines from all splits
+
+export default function UndergroundText({ children, animateOnScroll = true, delay = 0 }: UndergroundTextProps) {
+	const containerRef = useRef<HTMLDivElement  | null>(null);
+	const splitInstances = useRef<SplitText[]>([]); // actual SplitText instances
+	const lines = useRef<Element[]>([]); // collected lines from all splits
 
 	useGSAP(
 		() => {
@@ -39,8 +45,8 @@ export default function UndergroundText({ children, animateOnScroll = true, dela
 				// Preserve textIndent if present
 				const textIndent = window.getComputedStyle(element).textIndent;
 				if (textIndent && textIndent !== "0px" && split.lines.length > 0) {
-					split.lines[0].style.paddingLeft = textIndent;
-					element.style.textIndent = "0";
+					(split.lines[0] as HTMLElement).style.paddingLeft = textIndent;
+					(element as HTMLElement).style.textIndent = "0";
 				}
 			});
 
@@ -78,6 +84,7 @@ export default function UndergroundText({ children, animateOnScroll = true, dela
 
 	// Clone the single child to apply ref
 	if (React.Children.count(children) === 1) {
+		// @ts-expect-error Its
 		return React.cloneElement(children, { ref: containerRef });
 	}
 
