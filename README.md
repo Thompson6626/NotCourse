@@ -100,12 +100,12 @@ npm run preview
 
 ```
 .
+├── assets/               # Gifs for github
 ├── public/               # Static assets (e.g. logo.svg)
 ├── src/
-│   ├── styles/           # CSS files
-│   ├── constants/        
 │   ├── components/       # Landing Page Components
+│   ├── constants/        
+│   ├── styles/           # CSS files
 │   └── main.tsx
-├── styles.css            # Global Tailwind styles
 └── vite.config.ts        # Vite config (includes SVGR)
 ```
